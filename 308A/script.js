@@ -20,17 +20,17 @@ try {
 
 //function checks each element of the array. If an element is an array istelf, it recursively calls 'flattenArray' on that element and concatenates the refult with the 'flattened' array. If an element is not an array, it directly pushes it to the 'flattened' array
 function flattenArray(arr) {
-    let flattened = [];
+    let flattened = []
   
     arr.forEach((element) => {
       if (Array.isArray(element)) {
-        flattened = flattened.concat(flattenArray(element));
+        flattened = flattened.concat(flattenArray(element))
       } else {
-        flattened.push(element);
+        flattened.push(element)
       }
     });
   
-    return flattened;
+    return flattened
   }
   
   //trampoline the recursive function...continuously applies 'flattenArray' until there are no nested arrays left
@@ -40,38 +40,38 @@ function flattenArray(arr) {
       let result = fn.apply(this, args);
   
       while (typeof result === 'function') {
-        result = result();
+        result = result()
       }
   
-      return result;
-    };
+      return result
+    }
   }
   
-  const trampolinedFlatten = trampoline(flattenArray);
+  const trampolinedFlatten = trampoline(flattenArray)
   
 //completely flatten 
 const nestedArray = [1, [2, [3, 4, [5, 6, [7, 8, [9, [10]]]]]]];
-const flattenedArray = trampolinedFlatten(nestedArray);
-console.log(flattenedArray);
+const flattenedArray = trampolinedFlatten(nestedArray)
+console.log(flattenedArray)
 
 //Part 3
 // Cache the HTML element into a JavaScript variable
-const primeListElement = document.getElementById('primeList');
+const primeListElement = document.getElementById('primeList')
 
 // Function to check if a number is prime
 function isPrime(num) {
-  if (num <= 1) return false;
-  if (num <= 3) return true;
+  if (num <= 1) return false
+  if (num <= 3) return true
 
-  if (num % 2 === 0 || num % 3 === 0) return false;
+  if (num % 2 === 0 || num % 3 === 0) return false
 
   let i = 5;
   while (i * i <= num) {
-    if (num % i === 0 || num % (i + 2) === 0) return false;
-    i += 6;
+    if (num % i === 0 || num % (i + 2) === 0) return false
+    i += 6
   }
 
-  return true;
+  return true
 }
 
 // Function to add prime numbers up to n to the HTML element
@@ -80,23 +80,29 @@ function addPrimeNumbersToElement(n) {
 
   for (let i = 2; i <= n; i++) {
     if (isPrime(i)) {
-      primes.push(i);
+      primes.push(i)
     }
   }
 
-  // Adding prime numbers list to the HTML element
-  primeListElement.innerHTML = `<p>Prime numbers up to ${n}:</p>`;
-  const ul = document.createElement('ul');
-  primes.forEach((prime) => {
-    const li = document.createElement('li');
-    li.textContent = prime;
-    ul.appendChild(li);
-  });
-  primeListElement.appendChild(ul);
+  // Adding prime numbers list to the HTML element with delay between each number
+  primeListElement.innerHTML = `<p>Prime numbers up to ${n}:</p>`
+  const ul = document.createElement('ul')
+  primes.forEach((prime, index) => { 
+    setTimeout(() => {
+      const li = document.createElement('li')
+      li.textContent = prime
+      ul.appendChild(li)
+    })
 
-  // Alerting the user that the calculation is finished
-  alert('Calculation of prime numbers up to ' + n + ' is finished.');
+    // Append the list to the HTML element after the last number
+    if (index === primes.length - 1) {
+      primeListElement.appendChild(ul)
+
+  // Alert the user that the calculation is finished
+      alert('Calculation of prime numbers up to ' + n + ' is finished.')
+    }
+  }, index * 10) // the delay
 }
 
-// Calling the function with a parameter
-addPrimeNumbersToElement(10000);
+// Call the function with a parameter
+addPrimeNumbersToElement(10000)
