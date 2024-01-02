@@ -106,5 +106,3 @@ function addPrimeNumbersToElement(n) {
 
 // Call the function with a parameter
 addPrimeNumbersToElement(10000)
-
-//this is a test
